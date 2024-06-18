@@ -1,0 +1,777 @@
+
+/* ----------------------------------------------------------------------- */
+/* Инициализация */
+@import url('https://fonts.googleapis.com/css2?family=PT+Serif:wght@400;700&display=swap');
+:root {
+    --transition-one: all 0.5s ease;
+}
+* {
+    box-sizing: border-box;
+}
+html {
+    font-size: clamp(10px, 1.25vw, 20px);
+}
+body {
+    margin: 0;
+    padding: 0;
+    font-size: clamp(8px, 1.5vw, 12px);
+/*     font-family: Arial, Helvetica, sans-serif; */
+/*     font-family: 'finlandica', sans-serif; */
+/*     font-family: sans-serif; */
+    font-family: 'PT Serif', serif;
+}
+main {
+/*   background-color: #777; */
+    background-image: url("data:image/svg+xml,<svg id='patternId' width='100%' height='100%' xmlns='http://www.w3.org/2000/svg'><defs><pattern id='a' patternUnits='userSpaceOnUse' width='40' height='40' patternTransform='scale(4) rotate(0)'><rect x='0' y='0' width='100%' height='100%' fill='hsla(0,0%,100%,1)'/><path d='M10 4.124L4.155 9.987-4.124 10l-5.863-5.845L-10-4.124l5.845-5.863L4.124-10l5.863 5.845zm40 40l-5.845 5.863-8.279.013-5.863-5.845L30 35.876l5.845-5.863L44.124 30l5.863 5.845zm-40 0l-5.845 5.863-8.279.013-5.863-5.845-.013-8.279 5.845-5.863L4.124 30l5.863 5.845zm40-40l-5.845 5.863-8.279.013-5.863-5.845L30-4.124l5.845-5.863L44.124-10l5.863 5.845z'  stroke-linecap='square' stroke-width='0.5' stroke='hsla(259, 100%, 98%, 1)' fill='none'/><path d='M30 24.124l-5.845 5.863-8.279.013-5.863-5.845L10 15.876l5.845-5.863L24.124 10l5.863 5.845z'  stroke-linecap='square' stroke-width='0.5' stroke='hsla(340, 100%, 98%, 1)' fill='none'/></pattern></defs><rect width='800%' height='800%' transform='translate(0,0)' fill='url(%23a)'/></svg>");
+    background-attachment: fixed;
+    background-repeat: repeat;
+}
+a {
+    display: inline-block;
+}
+/* ----------------------------------------------------------------------- */
+/* Хедер */
+header {
+    position: sticky;
+    z-index: 1;
+    top: 0;
+    height: 6em;
+    transition: var(--transition-one);
+    background-color: aliceblue;
+    box-shadow: 0 0 1em lightblue;
+    border-bottom: 0.4px solid lightgray;
+}
+html.uped header {
+    height: 10em;
+}
+header section {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    max-width: 1800px;
+    height: 100%;
+}
+header h1 {
+    font-size: 2em;
+    margin: 0;
+    text-align: center;
+    font-variant: small-caps;
+    color: darkgreen;
+    transition: var(--transition-one);
+}
+html.uped header h1 {
+    font-size: 3em;
+}
+head-logo,
+head-title,
+head-tel {
+    display: block;
+    text-align: center;
+}
+head-logo {
+    height: 5em;
+    transition: var(--transition-one);
+}
+html.uped head-logo {
+    height: 7.5em;
+}
+head-logo a {
+    height: 100%;
+}
+head-logo img {
+    height: 100%;
+}
+head-tel {
+    display: flex;
+    flex-flow: column;
+    justify-content: space-around;
+    align-items: normal;
+    height: 6em;
+    transition: var(--transition-one);
+}
+html.uped head-tel {
+    height: 8em;
+}
+head-tel a {
+    font-size: 1.5em;
+    color: darkslategray;
+    font-weight: bold;
+    text-decoration: none;
+    border-bottom: 1px solid darkslategray;
+}
+header a:hover {
+    color: darkred;
+    border-bottom: 1px solid darkred;
+}
+@media (max-width: 480px) {
+    html.uped header {
+        height: 15em;
+    }
+    header section {
+        flex-wrap: wrap;
+    }
+    head-title {
+        order: -1;
+        width: 100%;
+        transition: var(--transition-one);
+        margin-top: -100px;
+    }
+    html.uped header head-title {
+        margin-top: 0px;
+    }
+    head-tel {
+        flex-flow: row;
+        align-items: center;
+    }
+    head-tel a {
+        font-size: 2em;
+        margin-right: 1em;
+    }
+}
+
+/* ----------------------------------------------------------------------- */
+/* - POPUP -*/
+popup-block {
+    display: block;
+    height: 3.5em;
+    text-align: center;
+}
+/* Стиль кнопки закрытия всплывающего окна */
+.popup-input-close {
+    -moz-appearance:initial;
+	position: absolute;
+	right: 0;
+	top: 0;
+	margin: 0;
+	height: 0;
+	width: 0;
+	outline: none;
+}
+.popup-input-close::after {
+	position: absolute;
+	right: -2px;
+	top: -2px;
+	content: attr(value);
+	background: white;
+	padding: 0.25em 0.5em;
+	margin: 0;
+	box-shadow: 0 0 0.5em darkgray;
+/* 	border: 0.5px solid lightgray; */
+	border-radius: 5px;
+    background-color: indianred;
+    color: white;
+}
+.popup-input-close:focus::after {
+	border: 0.5px solid darkred;
+}
+/* Стиль кнопки открытия всплывающего окна */
+.popup-input-open {
+    -moz-appearance:initial;
+	display: inline-grid;
+	position: relative;
+	margin: 0;
+/* 	height: 0; */
+/* 	width: 100%; */
+	outline: none;
+    font-size: 1.25em;
+}
+@media (max-width: 480px) {
+    .popup-input-open {
+        font-size: 1.75em;
+    }
+}
+.popup-input-open::after {
+	content: attr(value);
+	background: white;
+	padding: 0.5em 1em;
+    margin: auto;
+/* 	margin: 0.5em 1em; */
+	box-shadow: 0 0 0.5em gray;
+    text-align: center;
+    cursor: pointer;
+    animation: animation-color 9s infinite linear;
+    transition: color 0.1s ease;
+}
+@keyframes animation-color {
+  0%   { background-color: #f77; }
+  33.3%  { background-color: #7f7; }
+  66.6%  { background-color: #77f; }
+  100% { background-color: #f77; }
+}
+.popup-input-open:hover::after {
+/* 	background: bisque; */
+    color: white;
+}
+.popup-input-open:focus::after {
+	border: 0.5px solid darkred;
+}
+/*  Стиль всплывающей подсказки для кнопки открытия */
+.popup-input-open::before {
+    transition-duration: 0.5s;
+    transition-timing-function: ease-in-out;
+	position: absolute;
+    opacity: 0;
+	content: " ";
+	top: 2em;
+	text-align: center;
+}
+/*.popup-input-open:focus::before {
+	opacity: 1;
+	content: "Клавишами 'TAB' и 'ENTER' активировать, а стрелками закрывать и открывать.";
+	background: white;
+	padding: 1em;
+	margin: 0.5em 1em;
+	box-shadow: 0 0 0.5em gray;
+	width: 6em;
+}
+.popup-input-open:checked::before {
+	content: "Стрелками можно открывать, закрывать";
+	width: 6em;
+}*/
+popup-block-background {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    top: 0;
+}
+popup-block-background > label {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    top: 0;
+}
+popup-block-overlay {
+	display: block;
+	position: relative;
+	max-height: 99vh;
+	max-width: 99vw;
+}
+popup-block-overlay > div {
+	overflow: auto;
+	max-height: 100%;
+	max-width: 100%;
+	background-color: white;
+	box-shadow: 0 0 1em darkgray;
+	border: 0.5px solid gray;
+    border-radius: 0.75rem;
+}
+/* Стиль фона всплывающего окна */
+popup-block > popup-block-background {
+    transition-timing-function: ease-out;
+    transition-duration: .2s;
+    background: rgba(0,0,0,.75);
+    box-shadow: 0 0 5rem black;
+}
+/* Эффект исчезновения всплывающего окна */
+.popup-input-open:not(:checked) + popup-block-background {
+    margin-top: 200vh;
+    opacity: 0;
+    z-index: -1;
+}
+/* Эффект появления всплывающего окна */
+.popup-input-open:checked + popup-block-background {
+	margin-top: 0;
+	opacity: 1;
+	z-index: 1;
+}
+/* Стиль всплывающего окна */
+popup-block-area {
+	display: block;
+/* 	width: 50vw; */
+/* 	height: 50vh; */
+    padding: 2em;
+}
+
+/* ----------------------------------------------------------------------- */
+/* - Форма обратного звонка - */
+popup-block-area h3 {
+    font-size: 2em;
+    font-weight: bold;
+}
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+form label {
+    font-size: 1.5em;
+    text-align: left;
+    font-style: italic;
+}
+form input {
+    color: black;
+    font-size: 1.5em;
+    padding: 0.5em;
+    margin-bottom: 1em;
+    width: 16em;
+}
+form button {
+    font-size: 2em;
+    padding: 0.5em 1em;
+    background-color: lightgreen;
+    border-radius: 0.25em;
+}
+
+/* ----------------------------------------------------------------------- */
+/* - Слайдер фона - */
+div-slider {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 1em inset black;
+}
+div-slider.slider_background {
+    width: 100vw;
+    min-height: 100vh;
+    background-color: #777;
+    background-size: cover;
+    background-position: center;
+    animation: round calc(8s * 4) infinite; /* длительность одного фона * количество фонов */
+    animation-timing-function: linear;
+    padding-bottom: 3em;
+}
+@keyframes round {
+  0% {
+    background-image: url(../images/a1.jpg);
+    opacity: 0;
+  }
+  1% {
+    opacity: 1;
+  }
+  24.5% {
+    opacity: 1;
+  }
+  24.99% {
+    background-image: url(../images/a1.jpg);
+    opacity: 0;
+  }
+  25% {
+    background-image: url(../images/a1.jpg);
+    opacity: 0;
+  }
+  26% {
+    opacity: 1;
+  }
+  49.5% {
+    opacity: 1;
+  }
+  49.99% {
+    background-image: url(../images/a1.jpg);
+    opacity: 0;
+  }
+  50% {
+    background-image: url(../images/a1.jpg);
+    opacity: 0;
+  }
+  51% {
+    opacity: 1;
+  }
+  74.5% {
+    opacity: 1;
+  }
+  74.99% {
+    background-image: url(../images/a1.jpg);
+    opacity: 0;
+  }
+  75% {
+    background-image: url(../images/a1.jpg);
+    opacity: 0;
+  }
+  76% {
+    opacity: 1;
+  }
+  99.5% {
+    opacity: 1;
+  }
+  99.99% {
+    background-image: url(../images/a1.jpg);
+    opacity: 0;
+  }
+  100% {
+    background-image: url(../images/a11.jpg);
+    opacity: 0;
+  }
+}
+
+/* ----------------------------------------------------------------------- */
+/* Баннер фона */
+div-banner {
+    display: block;
+    text-align: center;
+    width: min(60em, 86%);
+    background-color: #fffe;
+    border-radius: 1em;
+    box-shadow: 0 0 1em gray;
+}
+div-banner h2 {
+    margin: 0;
+    letter-spacing: 1px;
+    font-variant: small-caps;
+    color: darkgreen;
+    font-size: 3em;
+    padding: 1em;
+}
+span-action {
+    display: inline;
+    font-size: 3em;
+}
+span-promo {
+    display: inline;
+    font-size: 2.5em;
+}
+div-banner span {
+    display: inline-block;
+    font-size: 2.5em;
+    padding: 1em;
+    color: darkgreen;
+    text-wrap: balance;
+}
+
+/* ----------------------------------------------------------------------- */
+/* - Услуги и цены - */
+#services {
+    background-color: white;
+}
+#services h2 {
+    font-size: 3em;
+    text-align: center;
+    padding: 1em;
+    margin: 0;
+    color: darkgreen;
+    font-variant: small-caps;
+}
+div-services {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    max-width: 1500px;
+    margin: auto;
+}
+div-service {
+    display: block;
+    text-align: center;
+    min-width: max(33%, 310px);
+    max-width: min(33%, 310px);
+}
+@media (max-width: 480px) {
+    div-service {
+        max-width: 90%;
+    }
+}
+div-service h3 {
+    font-size: 2.5em;
+    padding: 0 0.25em;
+}
+div-service img {
+    max-width: 75%;
+    box-shadow: 0 0 1em gray;
+}
+div-service p {
+    font-size: 2em;
+    margin: 0.5em;
+}
+div-service span {
+    display: inline-block;
+    margin-bottom: 1em;
+    font-size: 3em;
+    color: darkgreen;
+}
+
+/* ----------------------------------------------------------------------- */
+/* - Баннер: оставьте заявку - */
+section-banner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 40em;
+    width: 100%;
+    background-image: url(../images/a1.jpg);
+    background-color: #777;
+    background-size: cover;
+    background-position: center;
+    box-shadow: 0 0 1em inset gray;
+}
+
+/* ----------------------------------------------------------------------- */
+/* - Часто задаваемые вопросы - */
+#faq {
+    padding: 1em 2em;
+/*     background-color: #fff; */
+}
+#faq h2 {
+    font-size: 3em;
+    text-align: center;
+    padding: 1em;
+    margin: 0;
+    color: darkgreen;
+    font-variant: small-caps;
+}
+div-faq {
+    display: flex;
+/*     flex-wrap: wrap; */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 1000px;
+    margin: auto;
+}
+div-faq:nth-child(2n+1) {
+    align-items: end;
+}
+div-faq:nth-child(2n) {
+    align-items: start;
+}
+.faq {
+    max-width: min(70em, 80vw);
+}
+.faq h3 {
+    display: list-item;
+    font-weight: normal;
+    font-size: 2.5em;
+    color: darkgreen;
+}
+.faq h3::marker {
+    content: " - ";
+}
+.faq p {
+    margin: 0.25em 0;
+    font-size: 2em;
+    font-style: italic;
+    text-indent: 1em;
+    text-wrap: balance;
+}
+
+/* ----------------------------------------------------------------------- */
+/* - Наши преимущества - */
+#benefits {
+    padding: 1em 2em;
+/*     background-color: #fff; */
+}
+#benefits h2 {
+    font-size: 3em;
+    text-align: center;
+    padding: 1em;
+    margin: 1em;
+    color: darkgreen;
+    font-variant: small-caps;
+}
+div-benefits {
+    display: flex;
+/*     flex-wrap: wrap; */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 1000px;
+    margin: auto;
+}
+.benefits {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 5em;
+}
+.benefits:nth-child(2n+1) {
+    flex-direction: row-reverse;
+    text-align: right;
+}
+.benefits:nth-child(2n) {
+    text-align: left;
+}
+.benefits img {
+    width: min(20em, 40%);
+/*     max-width: min(20em, 40%); */
+}
+.benefits div {
+    max-width: 60%;
+    padding: 1em;
+}
+.benefits h3 {
+    font-size: 2.5em;
+    color: darkgreen;
+}
+.benefits p {
+    font-size: 2em;
+    font-weight: bold;
+    text-wrap: balance;
+}
+
+/* ----------------------------------------------------------------------- */
+/* - Наши преимущества-2 - */
+#benefits-2 {
+    padding: 0 1em 5em;
+/*     background-color: #fff; */
+}
+div-benefits-2 {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-evenly;
+    text-align: center;
+    max-width: 1600px;
+    margin: 0 auto;
+}
+div-benefits-2 div {
+    flex-basis: 30em;
+    margin-bottom: 2em;
+}
+div-benefits-2 h3 {
+    font-size: 2.5em;
+    color: darkgreen;
+}
+div-benefits-2 p {
+    font-size: 2em;
+    font-weight: bold;
+    text-wrap: balance;
+}
+
+/* ----------------------------------------------------------------------- */
+/* - Ваши отзывы - */
+#reviews {
+    padding: 2em 1em;
+    background-color: #fff;
+}
+#reviews h2 {
+    font-size: 3em;
+    text-align: center;
+    padding: 1em;
+    margin: 1em;
+    color: darkgreen;
+    font-variant: small-caps;
+}
+div-reviews {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-evenly;
+    text-align: center;
+    max-width: 1600px;
+    margin: 0 auto;
+}
+div-reviews div {
+    flex-basis: 30em;
+    margin-bottom: 5em;
+}
+@media (max-width: 495px) {
+    div-reviews div {
+        flex-basis: 90%;
+    }
+}
+div-reviews img {
+    max-width: 75%;
+    box-shadow: 0 0 0.5em gray;
+}
+div-reviews h3 {
+    font-weight: normal;
+    font-size: 2.5em;
+    color: darkgreen;
+}
+div-reviews p {
+    font-size: 2em;
+    font-weight: normal;
+    text-wrap: balance;
+}
+
+/* ----------------------------------------------------------------------- */
+/* - Контакты - */
+#contacts {
+/*     padding: 2em 1em; */
+    background-color: #fff;
+}
+#contacts h2 {
+    font-size: 3em;
+    text-align: center;
+/*     padding: 1em; */
+    margin: 0;
+    color: darkgreen;
+    font-variant: small-caps;
+}
+div-contacts {
+    display: block;
+    padding: 1em;
+}
+div-contacts h4 {
+    text-align: center;
+    font-size: 2em;
+    font-weight: bold;
+}
+div-contacts a {
+    color: black;
+    font-weight: bold;
+    text-decoration: none;
+    border-bottom: 1px solid darkslategray;
+}
+div-contacts p {
+    margin: 0.5em 0 0;
+    padding: 0;
+    font-size: 1.5em;
+    text-align: center;
+}
+div-contacts iframe {
+    display: block;
+    margin: 1em auto 2em;
+    height: 400px;
+    width: 100%;
+    max-width: 1600px;
+    box-shadow: 0 0 1em gray;
+    border: none;
+}
+
+/* ----------------------------------------------------------------------- */
+/* - Футер - */
+footer {
+/*     position: sticky; */
+/*     z-index: 1; */
+/*     bottom: 0; */
+    text-align: center;
+    padding-bottom: 2em;
+}
+footer a {
+    color: black;
+    font-size: 1.5em;
+    font-weight: normal;
+    text-decoration: none;
+    margin-bottom: 1em;
+    border-bottom: 1px solid darkslategray;
+}
+footer p {
+    margin: 0;
+}
+
+/* ----------------------------------------------------------------------- 
+
+/* Стиль всплывающего окна с текстом, что заявка отправлена */
+#isok {
+  font-size: 1.5em;
+}
+#isok popup-button-ok {
+  display: none;
+}
+#isok .popup-input-open::after {
+    content: none;
+}
+legend {
+  color: #fc0b2d;
+  width: 100%;
+  padding: 1em;
+  font-size: 1.5em;
+  font-weight: bold;
+  display: contents;
+}
+
+#isok popup-block-overlay {
+  max-width: 600px;
+}
